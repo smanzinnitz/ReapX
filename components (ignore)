@@ -1,0 +1,49 @@
+Main window,
+root = tk.Tk()
+root.title("Reap X - Roblox Executor")
+root.geometry("700x500")
+root.config(bg="#1e1e1e")
+
+Fonts and Colors,
+font_title = ("Segoe UI", 16, "bold")
+font_text = ("Consolas", 12)
+btn_color = "#3a3a3a"
+text_color = "#ffffff"
+
+Title,
+title = tk.Label(root, text="Reap X", font=font_title, fg="#00ffcc", bg="#1e1e1e")
+title.pack(pady=10)
+
+Script box,
+script_box = tk.Text(root, font=font_text, bg="#2e2e2e", fg=text_color, insertbackground=text_color)
+script_box.pack(padx=20, pady=10, expand=True, fill="both")
+
+Button frame,
+button_frame = tk.Frame(root, bg="#1e1e1e")
+button_frame.pack(pady=10)
+
+Functions,
+def execute_script():
+    code = script_box.get("1.0", tk.END).strip()
+    if code:
+        messagebox.showinfo("Reap X", "Script executed successfully!")
+    else:
+        messagebox.showwarning("Reap X", "No script to execute.")
+
+def clear_script():
+    script_box.delete("1.0", tk.END)
+
+def load_script():
+    file_path = filedialog.askopenfilename(filetypes=[("Lua files", ".lua"), ("Text files", ".txt")])
+    if file_path:
+        with open(file_path, "r") as file:
+            script_box.delete("1.0", tk.END)
+            script_box.insert("1.0", file.read())
+
+Buttons,
+tk.Button(button_frame, text="Execute", font=font_text, bg=btn_color, fg=text_color, command=execute_script, width=12).grid(row=0, column=0, padx=10)
+tk.Button(button_frame, text="Clear", font=font_text, bg=btn_color, fg=text_color, command=clear_script, width=12).grid(row=0, column=1, padx=10)
+tk.Button(button_frame, text="Load", font=font_text, bg=btn_color, fg=text_color, command=load_script, width=12).grid(row=0, column=2, padx=10)
+
+Run app,
+root.mainloop()
